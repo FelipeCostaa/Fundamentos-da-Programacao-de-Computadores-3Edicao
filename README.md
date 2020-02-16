@@ -1,6 +1,6 @@
-## Repositório contendo as listas de exercícios do livro:
-## "Fundamentos da programação- Pascal, C C+ java" 
-## Para a disciplina de Algoritmos I do IFMG - Campus Formiga
+#### Repositório contendo as listas de exercícios do livro:
+#### "Fundamentos da programação- Pascal, C C+ java" 
+#### Para a disciplina de Algoritmos I do IFMG - Campus Formiga
 
 
 ![img](FundamentosProgramacao.png)
