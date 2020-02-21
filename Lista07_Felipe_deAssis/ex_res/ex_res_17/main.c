@@ -8,6 +8,8 @@ Data:
 #include <stdlib.h>
 #include <string.h>
 
+#define tam 5
+
 int main(int argc, char const *argv[])
 {
 	
