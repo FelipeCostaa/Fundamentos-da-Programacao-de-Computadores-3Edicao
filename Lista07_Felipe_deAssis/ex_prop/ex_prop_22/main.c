@@ -42,6 +42,3 @@ int main(int argc, char const *argv[])
 	
 	return 0;
 }
-
-// Crie um programa que preencha uma matriz 6  10, some as colunas individualmente e acumule as so-
-// mas na 7 a linha da matriz. O programa deverá mostrar o resultado de cada coluna.
