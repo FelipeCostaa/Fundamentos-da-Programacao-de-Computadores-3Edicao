@@ -18,9 +18,9 @@
 * Lista 06 : Vetores 
   * Cap.06 – Resolvidos e Propostos
 * Lista 07 : Matrizes 
-  * Cap.07 – Resolvidose Propostos
+  * Cap.07 – Resolvidos e Propostos
 * Lista 08 : Sub-rotinas 
-  * Cap.08 – Resolvidose Propostos
+  * Cap.08 – Resolvidos e Propostos
 * Lista 09 : Registros (Structs) 
   * Cap.10 – Resolvidos
 * Lista 10 : Registros (Structs) 
