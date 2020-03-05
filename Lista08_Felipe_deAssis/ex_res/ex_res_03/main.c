@@ -8,9 +8,11 @@ Data:
 #include <stdlib.h>
 #include <string.h>
 
+int inteirosDivisiveisEntreAeB(int a, int b, int c);
+
 int main(int argc, char const *argv[])
 {
-	int a, b, c;
+	int a, b, c, resultado;
 
 	do
 	{
@@ -23,9 +25,25 @@ int main(int argc, char const *argv[])
 	printf("\nInforme o terceiro numero: ");
 	scanf("%d", &c);
 
+	resultado = inteirosDivisiveisEntreAeB(a, b, c);
+
+	printf("\nSoma dos numeros entre %d e %d que são divisiveis por %d é %d", b, c, a, resultado);
+
 	return 0;
 }
 
-int inteirosDivisiveisEntreAeB(int a, int b, int c){
+int inteirosDivisiveisEntreAeB(int a, int b, int c)
+{
+	int soma = 0;
 
+	for (int i = b + 1; i < c; i++)
+	{
+		if (i % a == 0)
+		{
+			soma += i;
+		}
+		
+	}
+	
+	return soma;
 }
