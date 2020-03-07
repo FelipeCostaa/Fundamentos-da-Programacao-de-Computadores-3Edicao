@@ -10,6 +10,7 @@ Data:
 
 int main(int argc, char const *argv[])
 {
+	int horaInicio, minutoInicio, horaTermino, minutoTermino;
 	
 	return 0;
 }
