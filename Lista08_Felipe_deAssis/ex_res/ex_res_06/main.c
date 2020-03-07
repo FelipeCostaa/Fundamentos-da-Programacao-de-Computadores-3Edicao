@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
 	{
 		printf("\nInforme um numero inteiro entre 1 e 9: \n-> ");
 		scanf("%d", &num);
-	} while (num >= 1 && num <= 9);
+	} while (num < 1 && num > 9);
 	
 	multiplicacao(num);
 
