@@ -11,14 +11,19 @@ Data:
 #define tam1 5
 #define tam2 4
 
+float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[tam1], int idade[tam1]);
+int maiorIdadeHabitantes(int idade[tam1]);
+int quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(char sexo[tam1], int idade[tam1], char corOlhos[tam1], char corCabelo[tam1]);
+
 int main(int argc, char const *argv[])
 {
 	char sexo[tam1], corOlhos[tam1], corCabelo[tam1];
 	int idade[tam1];
+	float mediaIdade;
 
 	for (int i = 0; i < tam1; i++)
 	{
-		printf("\n%dº habitante: ");
+		printf("\n%dº habitante: ", i+1);
 		for (int j = 0; j < tam2; j++)
 		{
 			printf("\nInforme os dados: ");
@@ -39,20 +44,13 @@ int main(int argc, char const *argv[])
 		}
 		
 	}
-
-	pesquisa(sexo, corOlhos, corCabelo, idade);
 	
 	return 0;
 }
 
-int pesquisa(char sexo[tam1], char corOlhos[tam1], char corCabelo[tam1], int idade[tam1])
-{
-	printf("\nMedia de idade das pessoas com olhos castanhos e cabelos pretos: %.2f.", mediaIdadeOlhosCastanhosCabelosPretos(corOlhos, corCabelo, idade));
-}
-
 float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[tam1], int idade[tam1])
 {
-	int	cont = 0, mediaIdade = 0;
+	float	cont = 0, mediaIdade = 0;
 
 	for (int i = 0; i < tam1; i++)
 	{
@@ -67,7 +65,59 @@ float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[
 		}
 		
 	}
+	mediaIdade /= cont++;
 
-	return mediaIdade / cont++;
+	return mediaIdade;
+}
+
+int maiorIdadeHabitantes(int idade[tam1])
+{
+	int maiorIdade = idade[0];
+
+	for (int i = 0; i < tam1; i++)
+	{
+		for (int j = 0; j < tam2; j++)
+		{
+			if (idade[i] > maiorIdade)
+			{
+				maiorIdade = idade[i];
+			}
+			
+		}
 		
+	}
+	
+	return maiorIdade;
+}
+
+int quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(char sexo[tam1], int idade[tam1], char corOlhos[tam1], char corCabelo[tam1])
+{
+	int cont = 0;
+
+	for (int i = 0; i < tam1; i++)
+	{
+		for (int j = 0; j < tam2; j++)
+		{
+			if (sexo[j] == 'f')
+			{
+				if (idade[j] > 18 && idade[j] <= 35)
+				{
+					if (corOlhos[j] == 'a')
+					{
+						if (corCabelo[j] == 'l')
+						{
+							cont++;
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	return cont;
 }
