@@ -8,8 +8,8 @@ Data:
 #include <stdlib.h>
 #include <string.h>
 
-#define tam1 5
-#define tam2 4
+#define tam1 1
+#define tam2 2
 
 float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[tam1], int idade[tam1]);
 int maiorIdadeHabitantes(int idade[tam1]);
@@ -17,34 +17,50 @@ int quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(char sexo[ta
 
 int main(int argc, char const *argv[])
 {
-	char sexo[tam1], corOlhos[tam1], corCabelo[tam1];
+	char sexo[tam1][tam2], corOlhos[tam1][tam2], corCabelo[tam1][tam2];
 	int idade[tam1];
-	float mediaIdade;
 
 	for (int i = 0; i < tam1; i++)
 	{
 		printf("\n%dº habitante: ", i+1);
-		for (int j = 0; j < tam2; j++)
-		{
-			printf("\nInforme os dados: ");
-			printf("\nSexo: \n(f - feminino, m - masculino)\n-> ");
-			setbuf(stdin, NULL);
-			gets(sexo[j]);
+		printf("\nInforme os dados: ");
+		printf("\nSexo: \n(f - feminino, m - masculino)\n-> ");
+		setbuf(stdin, NULL);
+		gets(sexo[i]);
 
-			printf("\nCor dos olhos: \n(a - azuis, c - castanho)\n-> ");
-			setbuf(stdin, NULL);
-			gets(corOlhos[j]);
+		printf("\nCor dos olhos: \n(a - azuis, c - castanho)\n-> ");
+		setbuf(stdin, NULL);
+		gets(corOlhos[i]);
 
-			printf("\nCor dos cabelos: \n(l - louros, p - pretos, c - castanhos)\n-> ");
-			setbuf(stdin, NULL);
-			gets(corCabelo[j]);
+		printf("\nCor dos cabelos: \n(l - louros, p - pretos, c - castanhos)\n-> ");
+		setbuf(stdin, NULL);
+		gets(corCabelo[i]);
 
-			printf("\nIdade: \n-> ");
-			scanf("%d", &idade[j]);
-		}
-		
+		printf("\nIdade: \n-> ");
+		scanf("%d", &idade[i]);
+		printf("\n-------------------------------------");
 	}
 	
+	if (mediaIdadeOlhosCastanhosCabelosPretos(corOlhos, corCabelo, idade) > 0)
+	{
+		printf("\nMedia de idade das pessoas com olhos castanhos e cabelos pretos: %.2f", mediaIdadeOlhosCastanhosCabelosPretos(corOlhos, corCabelo, idade));
+	}
+	else
+	{
+		printf("\nNão exitem pessoas com olhos castanhos e cabelos pretos");
+	}
+	
+	printf("\nMaior idade entre os habitantes: %d", maiorIdadeHabitantes(idade));
+
+	if (quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(sexo, idade, corOlhos, corCabelo) > 0)
+	{
+		printf("\nQuantidade de pessoas do sexo feminino com idade entre 18 e 35 anos que tenha os olhos azuis e cabelos loiros: %d", quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(sexo, idade, corOlhos, corCabelo));
+	}
+	else
+	{
+		printf("\nNão existem pessoas com idade entre 18 e 35 anos e que possuem olhos azuis e cabelos loiros");
+	}
+
 	return 0;
 }
 
@@ -54,14 +70,10 @@ float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[
 
 	for (int i = 0; i < tam1; i++)
 	{
-		for (int j = 0; j < tam2; j++)
+		if (corOlhos[i] == 'c' && corCabelo[i] == 'p')
 		{
-			if (corOlhos[j] == 'c' && corCabelo[j] == 'p')
-			{
-				mediaIdade += idade[j];
-				cont++;
-			}
-			
+			mediaIdade += idade[i];
+			cont++;
 		}
 		
 	}
@@ -76,13 +88,9 @@ int maiorIdadeHabitantes(int idade[tam1])
 
 	for (int i = 0; i < tam1; i++)
 	{
-		for (int j = 0; j < tam2; j++)
+		if (idade[i] > maiorIdade)
 		{
-			if (idade[i] > maiorIdade)
-			{
-				maiorIdade = idade[i];
-			}
-			
+			maiorIdade = idade[i];
 		}
 		
 	}
@@ -96,27 +104,22 @@ int quantidadeSexoFemininoIdadeEntre18e35ComOlhosAzuisCabelosLoiros(char sexo[ta
 
 	for (int i = 0; i < tam1; i++)
 	{
-		for (int j = 0; j < tam2; j++)
+		if (sexo[i] == 'f')
 		{
-			if (sexo[j] == 'f')
+			if (idade[i] > 18 && idade[i] <= 35)
 			{
-				if (idade[j] > 18 && idade[j] <= 35)
+				if (corOlhos[i] == 'a')
 				{
-					if (corOlhos[j] == 'a')
+					if (corCabelo[i] == 'l')
 					{
-						if (corCabelo[j] == 'l')
-						{
-							cont++;
-						}
-						
+						cont++;
 					}
 					
 				}
 				
 			}
 			
-		}
-		
+		}		
 	}
 	
 	return cont;
