@@ -8,7 +8,7 @@ Data:
 #include <stdlib.h>
 #include <string.h>
 
-#define tam1 1
+#define tam1 5
 #define tam2 2
 
 float mediaIdadeOlhosCastanhosCabelosPretos(char corOlhos[tam1], char corCabelo[tam1], int idade[tam1]);

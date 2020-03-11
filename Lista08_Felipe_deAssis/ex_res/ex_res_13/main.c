@@ -21,11 +21,22 @@ int main(int argc, char const *argv[])
 		vet1[i] = (rand() % 100) + 1;
 	}
 	
+	printf("\nVetor gerado: ");
+	for (int i = 0; i < tam; i++)
+	{
+		printf("\n[%d]= %d", i+1, vet1[i]);
+	}	
 	
 	return 0;
 }
 
-int fatorial()
+int fatorial(int a[tam], int b[tam])
 {
+	int f, a[tam], b[tam];
+
+	for (int i = 0; i < tam; i++)
+	{
+		
+	}
 	
 }
