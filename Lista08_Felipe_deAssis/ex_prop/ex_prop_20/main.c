@@ -14,6 +14,8 @@ Data:
 #include <string.h>
 
 void mediaSalario(float *salario, int cont);
+void mediaNumFilhos(int *numFilhos, int cont);
+void maiorSalario(float *salario, int cont);
 
 int main(int argc, char const *argv[])
 {
@@ -26,28 +28,23 @@ int main(int argc, char const *argv[])
 		printf("\nSalário: R$");
 		scanf("%f", &salario[cont]);
 		printf("\nNumero de filhos: ");
-		scanf("%d", &numFilhos[cont]);
-
-		printf("\nValor do salario na memoria: R$%.2f", salario[cont]);
+		scanf("%d", &numFilhos[cont - 1]);
 
 		do
 		{
 			printf("\nContinuar inserindo dados? \n(0 não | 1 sim) \n--> ");
 			scanf("%d", &menu);
-			// system("clear");
+			printf("\n-------------------------");
 		} while (menu != 0 && menu != 1);
-		// printf("\nPassou\n");
 
 		cont++;
 	} while (menu != 0);
 
-	printf("\nSalario: ");
-	for (int i = 0; i < cont - 1; i++)
-	{
-		printf("\n%dº | R$%.2f", i + 1, salario[i]);
-	}
+	printf("\n\n");
 
-	// mediaSalario(salario, cont);
+	mediaSalario(salario, cont);
+	mediaNumFilhos(numFilhos, cont);
+	maiorSalario(salario, cont);
 
 	return 0;
 }
@@ -56,13 +53,41 @@ void mediaSalario(float *salario, int cont)
 {
 	float media = 0;
 
-	printf("\nValor salario posição 0: R$%.2f", salario[0]);
+	for (int i = 0; i < cont; i++)
+	{
+		media += salario[i];
+	}
 
-	// for (int i = 0; i < cont; i++)
-	// {
-	// 	media += salario[i];
-	// 	printf("\nValor da media teste: %.2f", media);
-	// }
+	media /= (cont - 1);
 
-	printf("\n");
+	printf("\nA media do salario é de: R$%.2f", media);
+}
+
+void mediaNumFilhos(int *numFilhos, int cont)
+{
+	float media = 0;
+
+	for (int i = 0; i < cont; i++)
+	{
+		media += numFilhos[i];
+	}
+
+	media /= (cont - 1);
+
+	printf("\nA media do numero de filhos é de: %.2f", media);
+}
+
+void maiorSalario(float *salario, int cont)
+{
+	float maiorSal = 0;
+
+	for (int i = 0; i < cont; i++)
+	{
+		if (salario[i] > maiorSal)
+		{
+			maiorSal = salario[i];
+		}
+	}
+
+	printf("\nO maior salario é de: R$%.2f", maiorSal);
 }
