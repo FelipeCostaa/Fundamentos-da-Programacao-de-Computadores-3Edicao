@@ -26,3 +26,12 @@
 * Lista 10 : Registros (Structs) 
   * Cap.10 – Propostos
 
+#### OBS.:
+Exercicios feitos utilizando o sistema linux, distro Ubuntu 19.10
+
+Editor de texto Visual Studio Code:
+
+* Extensões do editor: 
+  
+  * C/C++
+  * C/C++ Compile Run
