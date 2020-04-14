@@ -51,12 +51,13 @@ int verificarSeCodigoDocumentoJaFoiCadastrado(documentos *structDocumentos, int 
 int verificaSeTodosOsDocumentosJaForamCadastrados(documentos *structDocumentos);
 int verificaSeClienteTemVinculoComAlgumDocumento(documentos *structDocumentos, int numClienteVerif);
 int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif);
+int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc);
 
 int main(int argc, char const *argv[])
 {
 	int menuPrincipal;
 	int codCliente, prossigaCase1; // usada na case 1
-	int numDoc, prossigaCase2;		 // usada na case 2
+	int numDoc, prossigaCase2;		 // usada na case 2 e 4
 	int codClienteVerif;					 // usada na case 2 e case 3
 
 	// variaveis com estruturas
@@ -249,6 +250,34 @@ int main(int argc, char const *argv[])
 
 		case 4:
 
+			printf("\nInforme o numero do documento que deseja excluir: ");
+			scanf("%d", &numDoc);
+
+			if (verificarSeCodigoDocumentoJaFoiCadastrado(structDocumentos, numDoc) == 1)
+			{
+				for (int i = verificaPosicaoDocumento(structDocumentos, numDoc); i < QUANT_DOCUMENTOS - 1; i++)
+				{
+					structDocumentos[i].numDoc = structDocumentos[i + 1].numDoc;
+					structDocumentos[i].codCliente = structDocumentos[i + 1].codCliente;
+					structDocumentos[i].diaVencimento = structDocumentos[i + 1].diaVencimento;
+					structDocumentos[i].mesVencimento = structDocumentos[i + 1].mesVencimento;
+					structDocumentos[i].anoVencimento = structDocumentos[i + 1].anoVencimento;
+					structDocumentos[i].diaPagamento = structDocumentos[i + 1].diaPagamento;
+					structDocumentos[i].mesPagamento = structDocumentos[i + 1].mesPagamento;
+					structDocumentos[i].anoPagamento = structDocumentos[i + 1].anoPagamento;
+					structDocumentos[i].valor = structDocumentos[i + 1].valor;
+					structDocumentos[i].juros = structDocumentos[i + 1].juros;
+					structDocumentos[i].verif = 1;
+				}
+
+				structDocumentos[QUANT_DOCUMENTOS - 1].verif = 0;
+				printf("\nDocumento excluido com sucesso!");
+			}
+			else
+			{
+				printf("\nERRO! Documento não encontrado.\n");
+			}
+
 			break;
 
 		case 5:
@@ -360,6 +389,17 @@ int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif)
 	for (int i = 0; i < QUANT_CLIENTES; i++)
 	{
 		if (structClientes[i].codCliente == numClienteVerif)
+		{
+			return i;
+		}
+	}
+}
+
+int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc)
+{
+	for (int i = 0; i < QUANT_DOCUMENTOS; i++)
+	{
+		if (structDocumentos[i].numDoc == numDoc)
 		{
 			return i;
 		}
