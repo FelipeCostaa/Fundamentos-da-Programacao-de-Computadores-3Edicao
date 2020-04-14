@@ -40,7 +40,7 @@ typedef struct documentos
 	float valor;
 	float juros;
 	int verif;
-	struct clientes dadosClientes;
+	// struct clientes dadosClientes;
 } documentos;
 
 // funções
@@ -49,6 +49,8 @@ int verificaSeCodigoClienteJaFoiCadastrado(clientes *structClientes, int codClie
 int verificaSeTodosOsClientesJaForamCadastrados(clientes *structClientes);
 int verificarSeCodigoDocumentoJaFoiCadastrado(documentos *structDocumentos, int numDoc);
 int verificaSeTodosOsDocumentosJaForamCadastrados(documentos *structDocumentos);
+int verificaSeClienteTemVinculoComAlgumDocumento(documentos *structDocumentos, int numClienteVerif);
+int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif);
 
 int main(int argc, char const *argv[])
 {
@@ -184,6 +186,8 @@ int main(int argc, char const *argv[])
 
 										structDocumentos[i].verif = 1;
 
+										printf("\nCadastro realizado com sucesso!\n");
+
 										prossigaCase2 = 1;
 									}
 									else
@@ -213,6 +217,33 @@ int main(int argc, char const *argv[])
 
 			printf("\nInforme o codigo do cliente que vai ser excluido: ");
 			scanf("%d", &codClienteVerif);
+
+			if (verificaSeCodigoClienteJaFoiCadastrado(structClientes, codClienteVerif) == 1)
+			{
+				if (verificaSeClienteTemVinculoComAlgumDocumento(structDocumentos, codClienteVerif) == 1)
+				{
+					printf("\nO cliente não pode ser excluido.\nExiste algum documento vinculado a ele.\n");
+				}
+				else
+				{
+					for (int i = verificaPosicaoCliente(structClientes, codClienteVerif); i < QUANT_CLIENTES - 1; i++)
+					{
+						structClientes[i].codCliente = structClientes[i + 1].codCliente;
+						strcpy(structClientes[i].nomeCliente, structClientes[i + 1].nomeCliente);
+						structClientes[i].telefoneCliente = structClientes[i + 1].telefoneCliente;
+						strcpy(structClientes[i].enderecoClienteRua, structClientes[i + 1].enderecoClienteRua);
+						structClientes[i].enderecoClienteNum = structClientes[i + 1].enderecoClienteNum;
+						structClientes[i].verif = 1;
+					}
+
+					structClientes[QUANT_CLIENTES - 1].verif = 0;
+					printf("\nCliente excluido com sucesso!\n");
+				}
+			}
+			else
+			{
+				printf("\nERRO! Codigo não cadastrado.\nTente outro.\n");
+			}
 
 			break;
 
@@ -248,7 +279,6 @@ int main(int argc, char const *argv[])
 			printf("\nERRO! Opção informada é invalida.\nTente outra\n");
 			break;
 		}
-
 	} while (menuPrincipal != 9);
 
 	return 0;
@@ -311,4 +341,27 @@ int verificaSeTodosOsDocumentosJaForamCadastrados(documentos *structDocumentos)
 		}
 	}
 	return 0;
+}
+
+int verificaSeClienteTemVinculoComAlgumDocumento(documentos *structDocumentos, int numClienteVerif)
+{
+	for (int i = 0; i < QUANT_DOCUMENTOS; i++)
+	{
+		if (structDocumentos[i].codCliente == numClienteVerif)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif)
+{
+	for (int i = 0; i < QUANT_CLIENTES; i++)
+	{
+		if (structClientes[i].codCliente == numClienteVerif)
+		{
+			return i;
+		}
+	}
 }
