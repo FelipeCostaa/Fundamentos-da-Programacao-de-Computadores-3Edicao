@@ -52,13 +52,15 @@ int verificaSeTodosOsDocumentosJaForamCadastrados(documentos *structDocumentos);
 int verificaSeClienteTemVinculoComAlgumDocumento(documentos *structDocumentos, int numClienteVerif);
 int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif);
 int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc);
+int verificaPosicaoClienteDocumento(documentos *structDocumentos, int numClienteVerif);
 
 int main(int argc, char const *argv[])
 {
 	int menuPrincipal;
 	int codCliente, prossigaCase1; // usada na case 1
 	int numDoc, prossigaCase2;		 // usada na case 2 e 4
-	int codClienteVerif;					 // usada na case 2 e case 3
+	int codClienteVerif;					 // usada na case 2, 3 e 5
+	int cont = 0;									 // usada na case 5
 
 	// variaveis com estruturas
 	clientes structClientes[QUANT_CLIENTES];
@@ -255,7 +257,7 @@ int main(int argc, char const *argv[])
 
 			if (verificarSeCodigoDocumentoJaFoiCadastrado(structDocumentos, numDoc) == 1)
 			{
-				for (int i = verificaPosicaoDocumento(structDocumentos, numDoc); i < QUANT_DOCUMENTOS - 1; i++)
+				for (int i = verificaPosicaoDocumento(structDocumentos, numDoc); i < QUANT_DOCUMENTOS; i++)
 				{
 					structDocumentos[i].numDoc = structDocumentos[i + 1].numDoc;
 					structDocumentos[i].codCliente = structDocumentos[i + 1].codCliente;
@@ -281,6 +283,37 @@ int main(int argc, char const *argv[])
 			break;
 
 		case 5:
+
+			printf("\nInforme o codigo do cliente do qual deseja excluir os documentos: ");
+			scanf("%d", &codClienteVerif);
+
+			if (verificaSeClienteTemVinculoComAlgumDocumento(structDocumentos, codClienteVerif) == 0)
+			{
+				printf("\nERRO! Codigo do cliente não encontrado.\n");
+			}
+			while (verificaSeClienteTemVinculoComAlgumDocumento(structDocumentos, codClienteVerif) == 1)
+			{
+				for (int i = verificaPosicaoClienteDocumento(structDocumentos, codClienteVerif); i < QUANT_DOCUMENTOS; i++)
+				{
+					structDocumentos[i].numDoc = structDocumentos[i + 1].numDoc;
+					structDocumentos[i].codCliente = structDocumentos[i + 1].codCliente;
+					structDocumentos[i].diaVencimento = structDocumentos[i + 1].diaVencimento;
+					structDocumentos[i].mesVencimento = structDocumentos[i + 1].mesVencimento;
+					structDocumentos[i].anoVencimento = structDocumentos[i + 1].anoVencimento;
+					structDocumentos[i].diaPagamento = structDocumentos[i + 1].diaPagamento;
+					structDocumentos[i].mesPagamento = structDocumentos[i + 1].mesPagamento;
+					structDocumentos[i].anoPagamento = structDocumentos[i + 1].anoPagamento;
+					structDocumentos[i].valor = structDocumentos[i + 1].valor;
+					structDocumentos[i].juros = structDocumentos[i + 1].juros;
+					structDocumentos[i].verif = 1;
+					cont++;
+				}
+			}
+
+			for (int i = QUANT_DOCUMENTOS - (cont + 1); i < QUANT_DOCUMENTOS; i++)
+			{
+				structDocumentos[i].verif = 0;
+			}
 
 			break;
 
@@ -400,6 +433,17 @@ int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc)
 	for (int i = 0; i < QUANT_DOCUMENTOS; i++)
 	{
 		if (structDocumentos[i].numDoc == numDoc)
+		{
+			return i;
+		}
+	}
+}
+
+int verificaPosicaoClienteDocumento(documentos *structDocumentos, int numClienteVerif)
+{
+	for (int i = 0; i < QUANT_DOCUMENTOS; i++)
+	{
+		if (structDocumentos[i].codCliente == numClienteVerif)
 		{
 			return i;
 		}
