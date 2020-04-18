@@ -53,14 +53,16 @@ int verificaSeClienteTemVinculoComAlgumDocumento(documentos *structDocumentos, i
 int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif);
 int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc);
 int verificaPosicaoClienteDocumento(documentos *structDocumentos, int numClienteVerif);
+int verificaValidacaoDaData(int dia1, int mes1, int ano1, int dia2, int mes2, int ano2);
 
 int main(int argc, char const *argv[])
 {
 	int menuPrincipal;
-	int codCliente, prossigaCase1; // usada na case 1
-	int numDoc, prossigaCase2;		 // usada na case 2 e 4
-	int codClienteVerif;					 // usada na case 2, 3 e 5
-	int cont = 0;									 // usada na case 5
+	int codCliente, prossigaCase1;					// usada na case 1
+	int numDoc, prossigaCase2;							// usada na case 2 e 4
+	int codClienteVerif;										// usada na case 2, 3 e 5
+	int cont = 0;														// usada na case 5
+	int dia1, dia2, mes1, mes2, ano1, ano2; // usado na case 6
 
 	// variaveis com estruturas
 	clientes structClientes[QUANT_CLIENTES];
@@ -319,6 +321,52 @@ int main(int argc, char const *argv[])
 
 		case 6:
 
+			printf("\nInforme o intervalo de datas na qual deseja excluir os documentos: ");
+			printf("\nData inicial: ");
+			do
+			{
+				printf("\nDia: ");
+				scanf("%d", &dia1);
+			} while (dia1 > 30);
+			do
+			{
+				printf("\nMês: ");
+				scanf("%d", &mes1);
+			} while (mes1 > 12);
+			do
+			{
+				printf("\nAno: ");
+				scanf("%d", &ano1);
+			} while (ano1 > ANO_ATUAL);
+
+			printf("\nData final: ");
+			do
+			{
+				printf("\nDia: ");
+				scanf("%d", &dia2);
+			} while (dia2 > 30);
+			do
+			{
+				printf("\nMês: ");
+				scanf("%d", &mes2);
+			} while (mes2 > 12);
+			do
+			{
+				printf("\nAno: ");
+				scanf("%d", &ano2);
+			} while (ano2 < ano1);
+
+			if (verificaValidacaoDaData(dia1, mes1, ano1, dia2, mes2, ano2) == 0)
+			{
+				printf("\nERRO! Data invalida.\nTente outra.\n");
+			}
+			else
+			{
+				for (int i = 0; i < QUANT_DOCUMENTOS; i++)
+				{
+				}
+			}
+
 			break;
 
 		case 7:
@@ -448,4 +496,26 @@ int verificaPosicaoClienteDocumento(documentos *structDocumentos, int numCliente
 			return i;
 		}
 	}
+}
+
+int verificaValidacaoDaData(int dia1, int mes1, int ano1, int dia2, int mes2, int ano2)
+{
+	if (ano1 > ano2)
+	{
+		return 0;
+	}
+	if (mes1 > mes2)
+	{
+		return 0;
+	}
+	if (dia1 > dia2)
+	{
+		return 0;
+	}
+	if (dia1 == dia2)
+	{
+		return 0;
+	}
+
+	return 1;
 }
