@@ -8,6 +8,7 @@ Data:
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <locale.h>
 
 // constates
 #define CARACTERES 64
@@ -60,9 +61,13 @@ int main(int argc, char const *argv[])
 	int menuPrincipal;
 	int codCliente, prossigaCase1;					// usada na case 1
 	int numDoc, prossigaCase2;							// usada na case 2 e 4
-	int codClienteVerif;										// usada na case 2, 3 e 5
+	int codClienteVerif;										// usada na case 2, 3, 5 e 7
 	int cont = 0;														// usada na case 5
 	int dia1, dia2, mes1, mes2, ano1, ano2; // usado na case 6
+  int posicao;                            // usado na case 7
+
+  // setlocale(LC_ALL, "Portuguese");
+  // setlocale(LC_ALL, "pt_BR_utf8");
 
 	// variaveis com estruturas
 	clientes structClientes[QUANT_CLIENTES];
@@ -321,6 +326,7 @@ int main(int argc, char const *argv[])
 
 		case 6:
 
+      printf("\nTEM DE SER TERMINADO\n");
 			printf("\nInforme o intervalo de datas na qual deseja excluir os documentos: ");
 			printf("\nData inicial: ");
 			do
@@ -371,6 +377,31 @@ int main(int argc, char const *argv[])
 
 		case 7:
 
+      printf("\nAlterar dados: \nCodigo do cliente: ");
+      scanf("%d", &codClienteVerif);
+
+      if (verificaSeCodigoClienteJaFoiCadastrado(structClientes, codClienteVerif) == 1)
+      {
+        posicao = verificaPosicaoCliente(structClientes, codClienteVerif);
+
+        printf("\nNome do cliente: ");
+        setbuf(stdin, NULL);
+        scanf("%[a-z A-Z]s", structClientes[posicao].nomeCliente);
+        printf("\nTelefone do cliente: \nddd + digitos (sem espaços): ");
+        scanf("%d", &structClientes[posicao].telefoneCliente);
+        printf("\nEndereço (rua): ");
+        setbuf(stdin, NULL);
+        scanf("%[a-z A-Z]s", structClientes[posicao].enderecoClienteRua);
+        printf("\nEndereço (numero): ");
+        scanf("%d", &structClientes[posicao].enderecoClienteNum);
+
+        printf("\nDados alterados com sucesso!\n");
+      }
+      else
+      {
+				printf("\nERRO! Codigo não cadastrado.\nTente outro.\n");
+      }
+
 			break;
 
 		case 8:
@@ -378,7 +409,7 @@ int main(int argc, char const *argv[])
 			break;
 
 		case 9:
-
+      printf("\nSaindo...\n");
 			break;
 
 		case 0:
