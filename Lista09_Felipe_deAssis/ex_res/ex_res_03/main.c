@@ -55,6 +55,7 @@ int verificaPosicaoCliente(clientes *structClientes, int numClienteVerif);
 int verificaPosicaoDocumento(documentos *structDocumentos, int numDoc);
 int verificaPosicaoClienteDocumento(documentos *structDocumentos, int numClienteVerif);
 int verificaValidacaoDaData(int dia1, int mes1, int ano1, int dia2, int mes2, int ano2);
+void totalDeDocumentosDoCliente(int codClienteVerif, documentos *structDocumentos);
 
 int main(int argc, char const *argv[])
 {
@@ -406,6 +407,18 @@ int main(int argc, char const *argv[])
 
 		case 8:
 
+      printf("\nCodigo do cliente: ");
+      scanf("%d", &codClienteVerif);
+
+      if (verificaSeCodigoClienteJaFoiCadastrado(structClientes, codClienteVerif) == 1)
+      {
+        totalDeDocumentosDoCliente(codClienteVerif, structDocumentos);
+      }
+      else
+      {
+				printf("\nERRO! Codigo não cadastrado.\nTente outro.\n");
+      }
+
 			break;
 
 		case 9:
@@ -549,4 +562,18 @@ int verificaValidacaoDaData(int dia1, int mes1, int ano1, int dia2, int mes2, in
 	}
 
 	return 1;
+}
+
+void totalDeDocumentosDoCliente(int codClienteVerif, documentos *structDocumentos)
+{
+  int cont = 0;
+
+  for (int i = 0; i < QUANT_DOCUMENTOS; i++)
+  {
+    if (codClienteVerif == structDocumentos[i].codCliente)
+    {
+      cont++;
+    }
+  }
+  printf("\nTotal de documentos do cliente de codigo %d: %d.\n", codClienteVerif, cont);
 }
